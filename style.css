@@ -48,14 +48,14 @@ a {
     padding: 80px 0;
 }
 
+/* FIXED: Section Title Centering */
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 50px;
+    margin: 0 auto 50px auto; /* Centers the box */
     position: relative;
-    display: inline-block;
-    left: 50%;
-    transform: translateX(-50%);
+    width: fit-content; /* Shrinks box to text width */
+    display: block;
 }
 
 .section-title::after {
@@ -64,7 +64,7 @@ a {
     width: 60px;
     height: 4px;
     background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
-    margin: 10px auto 0;
+    margin: 10px auto 0; /* Centers the underline */
     border-radius: 2px;
 }
 
@@ -129,12 +129,13 @@ a {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    min-height: 100vh; /* Changed from height to min-height for mobile safety */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
+    padding-top: 80px; /* Space for navbar */
     background: radial-gradient(circle at top right, rgba(0, 242, 234, 0.1), transparent 40%);
 }
 
@@ -151,6 +152,7 @@ a {
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 10px;
+    line-height: 1.2;
 }
 
 .tagline {
@@ -164,6 +166,7 @@ a {
     display: flex;
     gap: 20px;
     justify-content: center;
+    flex-wrap: wrap; /* Allows buttons to stack on small phones */
 }
 
 .btn {
@@ -173,6 +176,7 @@ a {
     cursor: pointer;
     transition: var(--transition);
     border: none;
+    display: inline-block;
 }
 
 .btn.primary {
@@ -195,12 +199,17 @@ a {
     color: #fff;
 }
 
-/* About Section */
+/* FIXED: About Section - Stacked Layout */
 .about-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr; /* Single column */
     gap: 40px;
-    align-items: start;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.bio-card {
+    text-align: center; /* Center text inside bio */
 }
 
 .bio-card h3 {
@@ -221,21 +230,24 @@ a {
 
 .timeline {
     border-left: 2px solid rgba(255,255,255,0.1);
-    padding-left: 20px;
+    padding-left: 30px;
+    max-width: 600px;
+    margin: 0 auto; /* Center the timeline */
 }
 
 .timeline-item {
     position: relative;
     margin-bottom: 30px;
+    text-align: left;
 }
 
 .timeline-item::before {
     content: '';
     position: absolute;
-    left: -26px;
+    left: -36px;
     top: 5px;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background: var(--accent-primary);
     border-radius: 50%;
     box-shadow: 0 0 10px var(--accent-primary);
@@ -250,7 +262,7 @@ a {
 /* Skills Section */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 20px;
     text-align: center;
 }
@@ -306,14 +318,9 @@ a {
 /* Portfolio */
 .portfolio-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     margin-bottom: 40px;
-}
-
-.project-card {
-    position: relative;
-    overflow: hidden;
 }
 
 .tech-stack {
@@ -327,6 +334,8 @@ a {
     border-radius: 4px;
     margin-right: 5px;
     color: var(--accent-primary);
+    display: inline-block;
+    margin-bottom: 5px;
 }
 
 .center-btn {
@@ -336,7 +345,7 @@ a {
 /* Contact */
 .contact-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive */
     gap: 40px;
 }
 
@@ -347,7 +356,7 @@ a {
 }
 
 .info-item i {
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     background: rgba(255,255,255,0.05);
     display: flex;
@@ -385,23 +394,24 @@ footer {
     color: var(--text-muted);
 }
 
-/* Responsive Mobile Styles */
+/* Responsive Styles */
 @media (max-width: 768px) {
     .navbar {
-        padding: 20px;
+        padding: 15px 20px;
     }
 
     .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 70px;
+        top: 60px;
         right: 0;
         width: 100%;
-        background: #0a0a0a;
+        background: rgba(10, 10, 10, 0.95);
         padding: 20px;
         text-align: center;
         border-bottom: 1px solid rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
     }
     
     .nav-links.active {
@@ -414,14 +424,34 @@ footer {
     }
 
     .hero h1 {
-        font-size: 2rem;
-    }
-
-    .about-container, .contact-container {
-        grid-template-columns: 1fr;
+        font-size: 2.2rem;
     }
     
     .hero-content {
         padding: 0 20px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    
+    .container {
+        padding: 0 25px; /* Safe padding for phones */
+    }
+    
+    /* Ensure Timeline looks good on phone */
+    .timeline {
+        padding-left: 20px;
+    }
+    
+    .timeline-item::before {
+        left: -26px;
+        width: 10px;
+        height: 10px;
+    }
+    
+    .contact-container {
+        grid-template-columns: 1fr;
     }
 }
